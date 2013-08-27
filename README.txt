@@ -70,18 +70,18 @@ And "{name}" {result}
 You can also edit the existing scenarios using the same guidelines.
 
 FORMATTING RULES
-The excel parser looks for the keyword “RuleSet” to begin parsing for rules. Anything written to the left or above RuleSet is ignored and can be used for notes
-com.rhc.insurance.rules is the package location of the rule in the directory structure
-Import com.rhc.insurance.Member tells the rule to import the Member class
-FALSE Sequential says that the rules do not need to be fired in top to bottom order
-The keyword “RuleTable” tells the parser that rules are about to follow
-The words following RuleTable are used as an identifier for all the rules in that table, until the parser comes across another RuleTable keyword with a new title
-Each row in a rule table represents a single rule
-CONDITION tells the parser that the elements in that column are part of the LHS of the rule
-ACTION tells the parser that the lements in that column are part of the RHS of the rule
-PRIORITY allows you to set a priority ranking for the order in which the rules fire. This overrides the TRUE Sequential option if that’s set.
-The row below the CONDITION, ACTION or PRIORITY row is where the object that is being modified is specified. In our case, this is always Member. Merging the cells specifying Member for the conditions indicates that there is one member with all of the qualities listed below.
-The row below that indicates the action that is being taken. $param takes whatever is in the cell in that column and uses that
-The row below that is for note-taking to specify what is going on in that column
-All rows following that are rules
+-The excel parser looks for the keyword “RuleSet” to begin parsing for rules. Anything written to the left or above RuleSet is ignored and can be used for notes
+-com.rhc.insurance.rules is the package location of the rule in the directory structure
+-Import com.rhc.insurance.Member tells the rule to import the Member class
+-FALSE Sequential says that the rules do not need to be fired in top to bottom order
+-The keyword “RuleTable” tells the parser that rules are about to follow
+-The words following RuleTable are used as an identifier for all the rules in that table, until the parser comes across another RuleTable keyword with a new title
+-Each row in a rule table represents a single rule
+-CONDITION tells the parser that the elements in that column are part of the LHS of the rule
+-ACTION tells the parser that the lements in that column are part of the RHS of the rule
+-PRIORITY allows you to set a priority ranking for the order in which the rules fire. This overrides the TRUE Sequential option if that’s set.
+-The row below the CONDITION, ACTION or PRIORITY row is where the object that is being modified is specified. In our case, this is always Member. Merging the cells specifying Member for the conditions indicates that there is one member with all of the qualities listed below.
+-The row below that indicates the action that is being taken. $param takes whatever is in the cell in that column and uses that
+-The row below that is for note-taking to specify what is going on in that column
+-All rows following that are rules
 
