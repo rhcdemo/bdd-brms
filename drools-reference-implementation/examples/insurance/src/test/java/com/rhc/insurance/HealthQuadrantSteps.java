@@ -74,16 +74,16 @@ public class HealthQuadrantSteps {
 
 	}
 
-	@Given("^a member Joe$")
-	public void a_member_Joe() throws Throwable {
+	@Given("^a member \"([^\"]*)\"$")
+	public void a_member(String arg1) throws Throwable {
 		// Express the Regexp above with the code you wish you had
 		member = new Member();
 		memberRepository.createSingleMember(member);
 		// throw new PendingException();
 	}
 
-	@Given("^Joe has condition \"([^\"]*)\" of degree \"([^\"]*)\"$")
-	public void Joe_has_condition_of_degree(String conditionArg,
+	@Given("^\"([^\"]*)\" has condition \"([^\"]*)\" of degree \"([^\"]*)\"$")
+	public void has_condition_of_degree(String arg1, String conditionArg,
 			String degreeArg) throws Throwable {
 		// ValueEnum conditionEnumVal = ValueEnum.fromString(myString);
 		CONDITIONS condition = CONDITIONS.valueOf(conditionArg);
@@ -133,8 +133,9 @@ public class HealthQuadrantSteps {
 	 * above with the code you wish you had throw new PendingException(); }
 	 */
 
-	@When("^determining the health quadrant for Joe$")
-	public void determining_the_health_quadrant_for_Joe() throws Throwable {
+	@When("^determining the health quadrant for \"([^\"]*)\"$")
+	public void determining_the_health_quadrant_for(String arg1)
+			throws Throwable {
 		// Express the Regexp above with the code you wish you had
 		// throw new PendingException();
 		System.out.println("pre");
@@ -154,8 +155,8 @@ public class HealthQuadrantSteps {
 		component.execute(request, null);
 	}
 
-	@Then("^Joe should be placed in Quadrant (\\d+)$")
-	public void Joe_should_be_placed_in_Quadrant(int quadrantArg)
+	@Then("^\"([^\"]*)\" should be placed in Quadrant (\\d+)$")
+	public void should_be_placed_in_Quadrant(String arg1, int quadrantArg)
 			throws Throwable {
 		// Express the Regexp above with the code you wish you had
 		// throw new PendingException();
@@ -168,19 +169,19 @@ public class HealthQuadrantSteps {
 		assertEquals(quadrantArg, member.getQuadrant());
 	}
 
-	@Then("^Joe receives standard care$")
-	public void Joe_receives_standard_care() throws Throwable {
+	@Then("^\"([^\"]*)\" receives standard care$")
+	public void receives_standard_care(String arg1) throws Throwable {
 		assertEquals(1, 1);
 	}
 
-	@Then("^Joe is assigned a behavioral health case manager$")
-	public void Joe_is_assigned_a_behavioral_health_case_manager()
+	@Then("^\"([^\"]*)\" is assigned a behavioral health case manager$")
+	public void is_assigned_a_behavioral_health_case_manager(String arg1)
 			throws Throwable {
 		assertEquals(1, 1);
 	}
 
-	@Then("^Joe is assigned a specialty disease care manager$")
-	public void Joe_is_assigned_a_specialty_disease_care_manager()
+	@Then("^\"([^\"]*)\" is assigned a specialty disease care manager$")
+	public void is_assigned_a_specialty_disease_care_manager(String arg1)
 			throws Throwable {
 		assertEquals(1, 1);
 	}
