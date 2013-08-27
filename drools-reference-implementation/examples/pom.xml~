@@ -10,6 +10,7 @@
   <packaging>pom</packaging>
   
 	<modules>
+		<module>discounts</module>
 		<module>insurance</module>
 	</modules>
 </project>
