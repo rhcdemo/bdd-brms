@@ -98,5 +98,3 @@ When determining the health quadrant for "Jill"
 Then "Jill" should be placed in Quadrant 1
 
 And "Jill" receives standard care
-
-//this is a test change
