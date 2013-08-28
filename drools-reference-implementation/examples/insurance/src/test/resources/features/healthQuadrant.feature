@@ -95,6 +95,6 @@ And "Jill" has condition "eatingDisorder" of degree "severe"
 
 When determining the health quadrant for "Jill"
 
-Then "Jill" should be placed in Quadrant 1
+Then "Jill" should be placed in Quadrant 4
 
 And "Jill" receives standard care
