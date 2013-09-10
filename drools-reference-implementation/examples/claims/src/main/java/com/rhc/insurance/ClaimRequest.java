@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import com.rhc.drools.reference.DroolsRequest;
 
-public class MemberRequest implements DroolsRequest
+public class ClaimRequest implements DroolsRequest
 {
 	private Collection<Object> facts = new ArrayList<Object>();
 

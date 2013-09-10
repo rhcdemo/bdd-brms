@@ -14,16 +14,18 @@ import com.rhc.drools.reference.KnowledgeBaseBuilder;
 import com.rhc.drools.reference.ReaderKnowledgeBaseBuilder;
 import com.rhc.drools.reference.RuleFlowCommandListBuilder;
 import com.rhc.drools.reference.StatelessDroolsComponent;
-import com.rhc.insurance.test.repositories.CucumberMemberRepository;
+import com.rhc.insurance.test.repositories.CucumberClaimRepository;
 
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class HealthQuadrantSteps {
+import com.rhc.insurance.Claim;
 
-	private CucumberMemberRepository memberRepository;
+public class ClaimSteps {
+
+	private CucumberClaimRepository claimRepository;
 	// private CucumberMemberRepository memberRepositoryResults;
 
 	private Member member;
@@ -42,8 +44,8 @@ public class HealthQuadrantSteps {
 
 		DroolsExcelConverter dec = new DroolsExcelConverter();
 
-		resources.add(dec.buildReader("rules/SeverityLevels.xls"));
-		resources.add(dec.buildReader("rules/AssignQuadrants.xls"));
+		resources.add(dec.buildReader("rules/ApplyDiscounts.xls"));
+		resources.add(dec.buildReader("rules/setRawPrice.xls"));
 
 		// buildKnowledgeBaseFromBufferedReader(dec.run());
 
@@ -64,7 +66,7 @@ public class HealthQuadrantSteps {
 
 	@Before
 	public void init() {
-		memberRepository = new CucumberMemberRepository();
+		claimRepository = new CucumberClaimRepository();
 		// memberRepositoryResults = new CucumberMemberRepository();
 
 		// calculate mapping between
@@ -73,7 +75,75 @@ public class HealthQuadrantSteps {
 		// memberRepository.createSingleMember(m)
 
 	}
+	
+	@Given("^a member \"([^\"]*)\"$")
+	public void a_member(String arg1) throws Throwable {
+		// Express the Regexp above with the code you wish you had
+		member = new Member();
+		//claimRepository.createSingleMember(member);
+		// throw new PendingException();
+	}
+	
+	
+	@Given("^\"([^\"]*)\" is a member of group \"([^\"]*)\"$")
+	public void is_a_member_of_group(String arg1, String groupName) throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+		
+		member.setGroup(groupName);
+		
+	    //throw new PendingException();
+	}
 
+	@Given("^\"([^\"]*)\" has visited a \"([^\"]*)\" for \"([^\"]*)\" at \"([^\"]*)\"$")
+	public void has_visited_a_for_at(String arg1, String caregiverString, String procedureString, String locationString) throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	  //  throw new PendingException();
+		
+		Claim c = new Claim();
+		c.setMember(member);
+		c.setCaregiverString(caregiverString);
+		c.setProcedureString(procedureString);
+		c.setLocationString(locationString);
+		c.setGroupString(member.getGroup());
+
+		
+		claimRepository.addSingleClaim(c);
+		
+		member.setClaim(c);
+	}
+
+	@When("^determining the claim price for \"([^\"]*)\"$")
+	public void determining_the_claim_price_for(String arg1) throws Throwable {
+		System.out.println("pre");
+		claimRepository.print();
+
+		Collection<Claim> claims = claimRepository.getClaims();
+		// System.out.println("MEMBERS: "+members);
+		// members.print();
+		ClaimRequest request = new ClaimRequest();
+		request.addFacts(claims);
+		System.out.println(component);
+		component.execute(request, null);
+
+		System.out.println("post");
+		claimRepository.print();
+
+		component.execute(request, null);
+	}
+
+	@Then("^\"([^\"]*)\" should be charged (\\d+)$")
+	public void should_be_charged(String arg1, int priceShouldBeCharged) throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	   // throw new PendingException();
+		
+		System.out.println("About to assert that " + priceShouldBeCharged + " equals "
+				+ member.getClaim().getPrice());
+
+		assertEquals(priceShouldBeCharged, member.getClaim().getPrice());
+	}
+
+	
+/*
 	@Given("^a member \"([^\"]*)\"$")
 	public void a_member(String arg1) throws Throwable {
 		// Express the Regexp above with the code you wish you had
@@ -127,12 +197,6 @@ public class HealthQuadrantSteps {
 		asthma, depression, anxiety, diabetes, eatingDisorder, cardiovascular
 	}
 
-	/*
-	 * @Given("^Joe has severe depression$") public void
-	 * Joe_has_severe_depression() throws Throwable { // Express the Regexp
-	 * above with the code you wish you had throw new PendingException(); }
-	 */
-
 	@When("^determining the health quadrant for \"([^\"]*)\"$")
 	public void determining_the_health_quadrant_for(String arg1)
 			throws Throwable {
@@ -185,5 +249,6 @@ public class HealthQuadrantSteps {
 			throws Throwable {
 		assertEquals(1, 1);
 	}
+	*/
 
 }

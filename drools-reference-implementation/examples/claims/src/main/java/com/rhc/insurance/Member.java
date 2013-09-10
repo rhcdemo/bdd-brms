@@ -10,6 +10,8 @@ public class Member {
 	//public Group group;
 	
 	public String group;
+	
+	public Claim claim;
 
 	//HashMap<String, String> conditions;
 
@@ -17,6 +19,23 @@ public class Member {
 	{
 	/*	conditions = new HashMap<String, String>();
 */
+	}
+
+	public String getGroup() {
+		return group;
+	}
+	
+
+	public Claim getClaim() {
+		return claim;
+	}
+
+	public void setClaim(Claim claim) {
+		this.claim = claim;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
 	}
 
 	public void print() {
