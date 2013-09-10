@@ -126,7 +126,7 @@ public class ClaimSteps {
 		System.out.println("post");
 		claimRepository.print();
 
-		component.execute(request, null);
+		//component.execute(request, null);
 	}
 
 	@Then("^\"([^\"]*)\" should be reimbursed (\\d+) dollars$")
@@ -138,7 +138,7 @@ public class ClaimSteps {
 		System.out.println("About to assert that " + priceShouldBeCharged
 				+ " equals " + member.getClaim().getPrice());
 
-		assertEquals(priceShouldBeCharged, member.getClaim().getPrice());
+		assertEquals(priceShouldBeCharged, member.getClaim().getPrice(), 0.001);
 	}
 
 	/*

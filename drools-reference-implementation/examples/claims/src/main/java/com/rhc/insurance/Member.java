@@ -17,6 +17,7 @@ public class Member {
 
 	public Member()
 	{
+		group = "default";
 	/*	conditions = new HashMap<String, String>();
 */
 	}

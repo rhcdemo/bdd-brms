@@ -3,7 +3,7 @@ package com.rhc.insurance;
 public class Claim {
 
 	public Member member;
-	public int price;
+	public float price;
 	
 	public String procedureString;
 	public int procedureCode;
@@ -74,11 +74,11 @@ public class Claim {
 		this.member = member;
 	}
 
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 
