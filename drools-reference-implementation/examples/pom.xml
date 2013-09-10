@@ -11,5 +11,6 @@
   
 	<modules>
 		<module>insurance</module>
+		<module>claims</module>
 	</modules>
 </project>
