@@ -67,6 +67,7 @@ public class ClaimSteps {
 	@Before
 	public void init() {
 		claimRepository = new CucumberClaimRepository();
+		claimRepository.init();
 		// memberRepositoryResults = new CucumberMemberRepository();
 
 		// calculate mapping between
@@ -104,7 +105,7 @@ public class ClaimSteps {
 		c.setCaregiverString(caregiverString);
 		c.setProcedureString(procedureString);
 		c.setLocationString(locationString);
-		c.setGroupString(member.getGroup());
+		c.setGroup(member.getGroup());
 
 		
 		claimRepository.addSingleClaim(c);
@@ -131,8 +132,8 @@ public class ClaimSteps {
 		component.execute(request, null);
 	}
 
-	@Then("^\"([^\"]*)\" should be charged (\\d+)$")
-	public void should_be_charged(String arg1, int priceShouldBeCharged) throws Throwable {
+	@Then("^\"([^\"]*)\" should be reimbursed (\\d+) dollars$")
+	public void should_be_reimbursed_dollars(String arg1, int priceShouldBeCharged) throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	   // throw new PendingException();
 		

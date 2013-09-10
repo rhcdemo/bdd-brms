@@ -11,14 +11,14 @@ public class Claim {
 	public String caregiverString;
 	public String locationString;
 	
-	public String groupString;
+	public String group;
 
-	public String getGroupString() {
-		return groupString;
+	public String getGroup() {
+		return group;
 	}
 
-	public void setGroupString(String groupString) {
-		this.groupString = groupString;
+	public void setGroup(String group) {
+		this.group = group;
 	}
 
 	public String getProcedureString() {
@@ -27,6 +27,23 @@ public class Claim {
 
 	public void setProcedureString(String procedureString) {
 		this.procedureString = procedureString;
+		
+		if (procedureString.equals("well visit"))
+		{
+			procedureCode = 1000;
+		}
+		if (procedureString.equals("sick visit"))
+		{
+			procedureCode = 2000;
+		}
+		if (procedureString.equals("wart removal"))
+		{
+			procedureCode = 3000;
+		}
+		if (procedureString.equals("EKG"))
+		{
+			procedureCode = 4000;
+		}
 	}
 
 	public String getCaregiverString() {

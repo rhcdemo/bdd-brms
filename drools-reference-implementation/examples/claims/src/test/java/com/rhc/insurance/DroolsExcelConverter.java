@@ -41,11 +41,11 @@ public class DroolsExcelConverter {
 		String compiledString = sc.compile(is, InputType.XLS);
 		compiledString = compiledString.replace("“", "\"");
 		compiledString = compiledString.replace("”", "\"");
-		compiledString = compiledString.replace("Member.", "$member.");
-		compiledString = compiledString.replace("Member", "$member : Member");
+		compiledString = compiledString.replace("Claim.", "$claim.");
+		compiledString = compiledString.replace("Claim", "$claim : Claim");
 		compiledString = compiledString.replace(
-				"com.rhc.insurance.$member : Member",
-				"com.rhc.insurance.Member");
+				"com.rhc.insurance.$claim : Claim",
+				"com.rhc.insurance.Claim");
 		System.out.println("here is the compiled string: ");
 		System.out.println(compiledString);
 		StringReader sr = new StringReader(compiledString);
