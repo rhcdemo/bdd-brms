@@ -11,4 +11,4 @@ And "Joe" has visited a "doctor" for "wart removal" at "doctor's office"
 
 When determining the claim price for "Joe"
 
-Then "Joe" should be charged 500
+Then "Joe" should be reimbursed 40 dollars
