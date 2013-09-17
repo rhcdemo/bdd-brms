@@ -4,6 +4,7 @@ LINKS
 rhcdemo GitHub: https://github.com/rhcdemo/bdd-brms
 Jenkins on OpenShift: http://bdd-rhcdemo.rhcloud.com/job/demo/
 user//pass : admin//admin
+Setting up Jenkins with Cucumber reporting on OpenShift Guide: https://mojo.redhat.com/docs/DOC-22754
 
 ACCESSING THE PROJECT
 1. Email sklenkar@redhat.com and bmeisele@redhat.com with your GitHub username stating that you want access to the BDD/BRMS demo and you will be made a collaborator shortly after.
