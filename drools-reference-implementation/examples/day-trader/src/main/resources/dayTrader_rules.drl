@@ -1,0 +1,10 @@
+import com.rhc.stock.Stock
+import com.rhc.stock.StockDay
+import com.rhc.stock.StockQuote
+
+rule 'helloWorld'
+	when
+		$stock : Stock(name == "GOOG")
+	then
+		System.out.println("GOOGLE GOOGLE GOOGLE !!!!");
+end
