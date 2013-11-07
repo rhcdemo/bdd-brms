@@ -12,7 +12,13 @@ end
 rule 'bidToBuyStock'
 	when
 		$quote : StockQuote()
-		$day : StockDay(stock.name == $quote.stock.name, dayOpen > $quote.price + $quote.volatility)
+		
+		$day : StockDay
+		(
+			stock.name == $quote.stock.name, 
+			dayOpen > $quote.price + $quote.volatility
+		)
+		
 	then
 		insert ( new String ( "buy") );
 end
@@ -21,7 +27,11 @@ end
 rule 'askToSellStock'
 	when
 		$quote : StockQuote()
-		$day : StockDay(stock.getName() == $quote.getStock().getName(), dayOpen < $quote.getPrice() - $quote.volatility)
+		$day : StockDay
+		(
+			stock.getName() == $quote.getStock().getName(), 
+			dayOpen < $quote.getPrice() - $quote.volatility
+		)
 	then
 		insert ( new String ( "sell") );
 end

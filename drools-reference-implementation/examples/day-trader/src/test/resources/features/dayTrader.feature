@@ -22,5 +22,7 @@ Scenario: Determine to bid
 Given a current price of "10.00" for a stock "GOOG"
 And a day open of "11.00"
 And a daily volatility of ".25" USD
+
 When determining an action for stock "GOOG"
+
 Then bid to buy "GOOG" for "10.01"
