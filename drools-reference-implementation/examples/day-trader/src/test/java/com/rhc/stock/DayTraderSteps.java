@@ -50,7 +50,6 @@ public class DayTraderSteps {
 	    quote.setPrice(Float.valueOf(price));
 	    quote.setStock(stock);
 	    stock.setQuote(quote);
-//	    throw new PendingException();
 	}
 
 	@Given("^a day open of \"([^\"]*)\"$")
@@ -58,14 +57,12 @@ public class DayTraderSteps {
 	    // Express the Regexp above with the code you wish you had
 		day.setDayOpen(Float.valueOf(open));
 		day.setStock(stock);
-//	    throw new PendingException();
 	}
 
 	@Given("^a daily volatility of \"([^\"]*)\" USD$")
 	public void a_daily_volatility_of_USD(String volatility) throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 		stock.getQuote().setVolatility(Float.valueOf(volatility));
-//	    throw new PendingException();
 	}
 
 	
@@ -76,7 +73,6 @@ public class DayTraderSteps {
 		tradeRequest.setQuote(stock.getQuote());
 		
 		tradeResponse = drools.execute(tradeRequest, TradeResponse.class);
-//	    throw new PendingException();
 	}
 	
 
@@ -95,7 +91,6 @@ public class DayTraderSteps {
 	@Then("^bid to buy \"([^\"]*)\" for \"([^\"]*)\"$")
 	public void bid_to_buy_for(String name, String price) throws Throwable {
 	    // Express the Regexp above with the code you wish you had
-//	    throw new PendingException();
 		String action = tradeResponse.getAction();
 		if (action != null) {
 			if (action.equalsIgnoreCase("buy"))
