@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
@@ -105,11 +106,12 @@ public class Stock implements DroolsRequest{
 			stockDay.setDayClose((float) Double.parseDouble(line[4]));
 			
 //			System.out.println(name + "--" + stockDay.getDay().toString() + "--" + stockDay.getDayOpen() + "--" + stockDay.getDayHigh() + "--" + stockDay.getDayLow() + "--" + stockDay.getDayClose());
-			
+						
 			this.getHistory().put(date, stockDay);
 	    }
 	    
 	    inStream.close();
+	    populateBollingerBands();
 	    this.updateQuote();
 	}
 
@@ -155,9 +157,32 @@ public class Stock implements DroolsRequest{
 		sb.append(endYear);
 		
 		url = sb.toString();
+		System.out.println(url);
 		return url;
 		
 	}
+	
+	
+	public void populateBollingerBands() {
+		Set<StockDay> days = (Set<StockDay>) history.values();
+		List<StockDay> dayList = new ArrayList<StockDay>();
+		dayList.addAll(days);
+		Collections.sort(dayList);
+		ListIterator<StockDay> dayIt = dayList.listIterator();
+		for (int i=0; i< BOLLINGER_LENGTH; i++) {
+		        dayIt.next();
+		}
+		while(dayIt.hasNext()){
+			ListIterator<StockDay> it = dayIt;
+			while(it.hasPrevious()) {
+				
+			}
+		}
+
+
+		
+	}
+	
 	
 	//Pupulates information on Bollinger Band for a specific day
 	public void populateBollingerBands(StockDay day) {
@@ -184,8 +209,12 @@ public class Stock implements DroolsRequest{
 			day.setUpperBand(upperBand);
 			day.setLowerBand(lowerBand);
 			
-			System.out.println(day.getDay().toString() + "--MB--" + middleBand + "--SD--" + sd + "--LB--" + lowerBand + "--UB--" + upperBand);
+			//TODO: Remove when not debugging
+			//System.out.println(day.getDay().toString() + "--MB--" + middleBand + "--SD--" + sd + "--LB--" + lowerBand + "--UB--" + upperBand);
 		}
+		//TODO: Remove when not debugging
+		System.out.println(day.getDay().toString() + "--MB--" + day.getMiddleBand() + "--LB--" + day.getLowerBand() + "--UB--" + day.getUpperBand());
+
 	}
 	
 	//Determines the standard deviation of the closing price

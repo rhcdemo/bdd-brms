@@ -37,11 +37,11 @@ public class DayTraderSteps {
 
 	@Before
 	public void init() throws MalformedURLException, IOException, ParseException {
-	    Stock stock = new Stock();
-	    stock.setName("GOOG");
-	    stock.setTicker("GOOG");
-	    stock.populateHistory();
-	    stock.populateBollingerBands(stock.getHistory().get(stock.getHistory().lastKey()));
+	    //Stock stock = new Stock();
+	    //stock.setName("GOOG");
+	    //stock.setTicker("GOOG");
+	    //stock.populateHistory();
+	    //stock.populateBollingerBands(stock.getHistory().get(stock.getHistory().lastKey()));
 	    
 	    
 
