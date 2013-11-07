@@ -24,7 +24,6 @@ rule 'bidToBuyStock'
 end
 
 
-
 rule 'askToSellStock'
 	when
 		$quote : StockQuote()
