@@ -15,7 +15,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
@@ -25,20 +24,19 @@ import java.math.*;
 
 import com.rhc.drools.reference.DroolsRequest;
 
-public class Stock implements DroolsRequest{
+public class Stock{
 	
 	private String name;
 	private String ticker;
 	private StockQuote quote;
-	private SortedMap<Date, StockDay> history = new TreeMap<Date, StockDay>();
-	private static int BOLLINGER_LENGTH = 10;
+	private Map<Date, StockDay> history = new HashMap<Date, StockDay>();
 	
 	
-	public SortedMap<Date, StockDay> getHistory() {
+	public Map<Date, StockDay> getHistory() {
 		return history;
 	}
 
-	public void setHistory(SortedMap<Date, StockDay> history) {
+	public void setHistory(Map<Date, StockDay> history) {
 		this.history = history;
 	}
 	
@@ -60,23 +58,19 @@ public class Stock implements DroolsRequest{
 	public void setQuote(StockQuote quote) {
 		this.quote = quote;
 	}
-	@Override
-	public Set<Object> getAllFacts() {
-		Set<Object> set = new HashSet<Object>();
-		set.add( getName() );
-		set.add( getTicker() );
-		set.add( getHistory() );
-		set.add( getQuote() );
-		set.add( this );
-		return set;
-	}
-	@Override
-	public String getProcessId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-	//Populates the history with trading information from the past 30 calendar days from Yahoo Finance
+	
+	/**
+	 * Populates the history with trading information from the 
+	 * past 30 calendar days from Yahoo Finance.
+	 * Creates a URL to access Yahoo Finance and get information in .csv format.
+	 * Parses .csv file and loads information into an instance of StockDay for each line.
+	 * Each day is then loaded into history.
+	 * 
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws MalformedURLException
+	 */
 	public void populateHistory() throws IOException, ParseException, MalformedURLException {
 		Date date = new Date();
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -106,34 +100,47 @@ public class Stock implements DroolsRequest{
 			stockDay.setDayClose((float) Double.parseDouble(line[4]));
 			
 //			System.out.println(name + "--" + stockDay.getDay().toString() + "--" + stockDay.getDayOpen() + "--" + stockDay.getDayHigh() + "--" + stockDay.getDayLow() + "--" + stockDay.getDayClose());
-						
+			
 			this.getHistory().put(date, stockDay);
 	    }
 	    
 	    inStream.close();
-	    populateBollingerBands();
 	    this.updateQuote();
 	}
 
-	//Updates the quote with information from the most recent day in history
+	/**
+	 * Updates the quote with information from the most recent day in history.
+	 * 
+	 */
 	public void updateQuote() {
 		StockQuote quote = new StockQuote();
 		quote.setStock(this);
 
-		Date currentDay = getHistory().lastKey();
+//		Date currentDay = getHistory().lastKey();
+		List<Date> dates = new ArrayList<Date>();
+		dates.addAll(getHistory().keySet());
+		Collections.sort(dates);
+		Collections.reverse(dates);
 		
 		StockDay stockDay = new StockDay();
-		stockDay = getHistory().get(currentDay);
+		stockDay = getHistory().get(dates.get(0));
 		
-		quote.setValue(stockDay.getDayClose());
+		quote.setPrice(stockDay.getDayClose());
 		setQuote(quote);
 	}
 	
-	//Creates the url to access Yahoo Finance historical information from last 30 calendary days
+	/**
+	 * Creates the URL to access Yahoo Finance historical information from last 30 calendar days.
+	 * Uses the current date to get the day for a month earlier.
+	 * Creates a URL of format needed to access Yahoo Finance.
+	 *  
+	 * @return URL to access Yahoo Finance data for last 30 days.
+	 */
 	private String getHistoryUrl(){
 		String url = new String();
 		StringBuffer sb = new StringBuffer();
 		
+		//Yahoo Finance requires the month field in the URL to be the current month - 1 (ex: October would be 9 instead of 10)
 		Integer startMonth = Calendar.getInstance().get(Calendar.MONTH) - 1;
 		Integer startDay = Calendar.getInstance().get(Calendar.DATE);
 		Integer startYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -157,76 +164,59 @@ public class Stock implements DroolsRequest{
 		sb.append(endYear);
 		
 		url = sb.toString();
-		System.out.println(url);
 		return url;
 		
 	}
 	
+	/**
+	 * Populates Bollinger bands of a specific day
+	 * Based on availability of history, Bollinger Band information is calculated.
+	 * The middle band is the average of the close price of days used for data.
+	 * The upper band is the middle band + (2 * standard deviation of middle band).
+	 * The lower band is the middle band - (2 * standard deviation of middle band).
+	 * 
+	 */
+//	public void populateBollingerBands(StockDay day) {
+//		//If there is not enough history, the band for that day will not be created
+//		//If there is enough history, the band will be created using all historical information available
+//		if(!history.isEmpty() && history.size() > BOLLINGER_LENGTH) {
+//			float middleBand = new Float(0);
+//			float upperBand = new Float(0);
+//			float lowerBand = new Float(0);
+//			
+//			// Determine the middle Bollinger Band
+//			for (Date date : getHistory().keySet()){
+//					middleBand += history.get(date).getDayClose() ;
+//					
+//			}
+//			middleBand /= history.size();
+//			day.setMiddleBand(middleBand);
+//			
+//			float sd = standardDeviation(middleBand);
+//			
+//			// Determine the bands based on the standard deviation
+//			upperBand = middleBand + 2*sd;
+//			lowerBand = middleBand - 2*sd;
+//			day.setUpperBand(upperBand);
+//			day.setLowerBand(lowerBand);
+//			
+//			System.out.println(day.getDay().toString() + "--MB--" + middleBand + "--SD--" + sd + "--LB--" + lowerBand + "--UB--" + upperBand);
+//		}
+//	}
+//	
 	
-	public void populateBollingerBands() {
-		Set<StockDay> days = (Set<StockDay>) history.values();
-		List<StockDay> dayList = new ArrayList<StockDay>();
-		dayList.addAll(days);
-		Collections.sort(dayList);
-		ListIterator<StockDay> dayIt = dayList.listIterator();
-		for (int i=0; i< BOLLINGER_LENGTH; i++) {
-		        dayIt.next();
-		}
-		while(dayIt.hasNext()){
-			ListIterator<StockDay> it = dayIt;
-			while(it.hasPrevious()) {
-				
-			}
-		}
-
-
-		
-	}
-	
-	
-	//Pupulates information on Bollinger Band for a specific day
-	public void populateBollingerBands(StockDay day) {
-		//If there is not enough history, the band for that day will not be created
-		//If there is enough history, the band will be created using all historical information available
-		if(!history.isEmpty() && history.size() > BOLLINGER_LENGTH) {
-			float middleBand = new Float(0);
-			float upperBand = new Float(0);
-			float lowerBand = new Float(0);
-			
-			// Determine the middle Bollinger Band
-			for (Date date : getHistory().keySet()){
-					middleBand += history.get(date).getDayClose() ;
-					
-			}
-			middleBand /= history.size();
-			day.setMiddleBand(middleBand);
-			
-			float sd = standardDeviation(middleBand);
-			
-			// Determine the bands based on the standard deviation
-			upperBand = middleBand + 2*sd;
-			lowerBand = middleBand - 2*sd;
-			day.setUpperBand(upperBand);
-			day.setLowerBand(lowerBand);
-			
-			//TODO: Remove when not debugging
-			//System.out.println(day.getDay().toString() + "--MB--" + middleBand + "--SD--" + sd + "--LB--" + lowerBand + "--UB--" + upperBand);
-		}
-		//TODO: Remove when not debugging
-		System.out.println(day.getDay().toString() + "--MB--" + day.getMiddleBand() + "--LB--" + day.getLowerBand() + "--UB--" + day.getUpperBand());
-
-	}
-	
-	//Determines the standard deviation of the closing price
-	private float standardDeviation(float average) {
-		// Determine the std deviation for the Upper & Lower Bands
-		float sd = new Float(0.0);
-		for (Date date : getHistory().keySet()){
-				sd = (float) (sd + Math.pow(history.get(date).getDayClose() - average, 2));
-		}
-		
-		sd = (float) Math.sqrt(sd/(history.size()-1));
-		return sd;
-	}
+	/**
+	 * Finds the standard deviation of the history given the average
+	 */
+//	private float standardDeviation(float average) {
+//		// Determine the std deviation for the Upper & Lower Bands
+//		float sd = new Float(0.0);
+//		for (Date date : getHistory().keySet()){
+//				sd = (float) (sd + Math.pow(history.get(date).getDayClose() - average, 2));
+//		}
+//		
+//		sd = (float) Math.sqrt(sd/(history.size()-1));
+//		return sd;
+//	}
 		
 }

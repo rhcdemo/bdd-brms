@@ -8,36 +8,19 @@ When the value of "GOOG" is high
 Then sell "GOOG"
 
 @Ask
-Scenario: Determine high scrape condition
+Scenario: Determine to ask
 
-Given a stock "GOOG"
-When the current value of "GOOG" is at a high scrape
-Then ask to sell "GOOG"
-
+Given a current price of "26.00" for a stock "GOOG"
+And a day open of "25.00"
+And a daily volatility of ".25" USD
+When determining an action for stock "GOOG" 
+Then ask to sell stock "GOOG" for "25.99"
 
 @Bid
-Scenario: Determine low scrape condition
+Scenario: Determine to bid
 
-Given a stock "GOOG"
-When the current value of "GOOG" is at a low scrape
-Then bid to buy "GOOG"
-
-
-@WatchSell
-Scenario: Determine potential sell condition
-
-Given a stock "GOOG"
-When the current value of "GOOG" approaches a high scrape
-Then watch to sell "GOOG"
-
-
-@WatchBuy
-Scenario: Determine potential buy condition
-
-Given a stock "GOOG"
-When the current value of "GOOG" approaches a low scrape
-Then watch to buy "GOOG"
-
-
-
-
+Given a current price of "10.00" for a stock "GOOG"
+And a day open of "11.00"
+And a daily volatility of ".25" USD
+When determining an action for stock "GOOG"
+Then bid to buy "GOOG" for "10.01"

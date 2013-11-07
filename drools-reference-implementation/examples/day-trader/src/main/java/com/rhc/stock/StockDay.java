@@ -8,7 +8,7 @@ import java.util.Set;
 import com.rhc.drools.reference.DroolsRequest;
 
 @SuppressWarnings("rawtypes")
-public class StockDay implements DroolsRequest, Comparable{
+public class StockDay implements Comparable{
 
 	private Stock stock;
 	private Float dayOpen;
@@ -16,34 +16,7 @@ public class StockDay implements DroolsRequest, Comparable{
 	private Float dayLow;
 	private Float dayHigh;
 	private Date day;
-	private Float upperBand;
-	private Float lowerBand;
-	private Float middleBand;
 	
-	public Float getUpperBand() {
-		return upperBand;
-	}
-
-	public void setUpperBand(Float upperBand) {
-		this.upperBand = upperBand;
-	}
-
-	public Float getLowerBand() {
-		return lowerBand;
-	}
-
-	public void setLowerBand(Float lowerBand) {
-		this.lowerBand = lowerBand;
-	}
-
-	public Float getMiddleBand() {
-		return middleBand;
-	}
-
-	public void setMiddleBand(Float middleBand) {
-		this.middleBand = middleBand;
-	}
-
 	public StockDay() {
 		day = new Date();
 	}
@@ -94,28 +67,6 @@ public class StockDay implements DroolsRequest, Comparable{
 
 	public void setDay(Date day) {
 		this.day = day;
-	}
-
-	@Override
-	public Collection<Object> getAllFacts() {
-		Set<Object> set = new HashSet<Object>();
-		set.add( getStock() );
-		set.add( getDayOpen() );
-		set.add( getDayClose() );
-		set.add( getDayHigh() );
-		set.add( getDayLow() );
-		set.add( getDay() );
-		set.add( getUpperBand() );
-		set.add( getLowerBand() );
-		set.add( getMiddleBand() );
-		set.add( this );
-		return set;
-	}
-
-	@Override
-	public String getProcessId() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

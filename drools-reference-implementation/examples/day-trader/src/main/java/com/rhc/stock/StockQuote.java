@@ -6,10 +6,10 @@ import java.util.Set;
 
 import com.rhc.drools.reference.DroolsRequest;
 
-public class StockQuote implements DroolsRequest{
+public class StockQuote{
 	
 	private Stock stock;
-	private Float value;
+	private Float price;
 	private Float volatility;
 
 	public Stock getStock() {
@@ -20,12 +20,12 @@ public class StockQuote implements DroolsRequest{
 		this.stock = stock;
 	}
 
-	public Float getValue() {
-		return value;
+	public Float getPrice() {
+		return price;
 	}
 
-	public void setValue(Float value) {
-		this.value = value;
+	public void setPrice(Float price) {
+		this.price = price;
 	}
 
 	public Float getVolatility() {
@@ -35,21 +35,6 @@ public class StockQuote implements DroolsRequest{
 	public void setVolatility(Float volatility) {
 		this.volatility = volatility;
 	}
-
-	@Override
-	public Collection<Object> getAllFacts() {
-		Set<Object> set = new HashSet<Object>();
-		set.add( getStock() );
-		set.add( getValue() );
-		set.add( getVolatility() );
-		set.add( this );
-		return set;
-	}
-
-	@Override
-	public String getProcessId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 }
