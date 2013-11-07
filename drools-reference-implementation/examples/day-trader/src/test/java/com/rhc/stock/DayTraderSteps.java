@@ -41,45 +41,6 @@ public class DayTraderSteps {
 	@Before
 	public void init() throws MalformedURLException, IOException, ParseException {
 	}
-
-	//Functions created as testing information
-	//Commented out when not in use
-	
-//	@SuppressWarnings("unchecked")
-//	@Given("^a stock \"([^\"]*)\"$")
-//	public void a_stock(String name) throws Throwable {
-//	    Stock stock = new Stock();
-//	    stock.setName(name);
-//	    //stock.setTicker(name);
-//	    //stock.populateHistory();
-//	   
-//	}
-//
-//	@When("^the value of \"([^\"]*)\" is high$")
-//	public void the_value_of_is_high(String arg1) throws Throwable {
-//	    // Express the Regexp above with the code you wish you had
-//		if (!stocks.isEmpty()){
-//			Iterator<Stock> stockIT = stocks.iterator();
-//			while(stockIT.hasNext()){
-//				stock = stockIT.next();
-//				if (stock.getName().equalsIgnoreCase(arg1)){
-////					if (stock.getQuote().getValue().compareTo(new Float(100)) > 0 ){
-////						System.out.println("The most current value of " + arg1 + "--" + stock.getQuote().getValue() + "-- is high.");
-////					}
-////					drools.execute(stock, Stock.class);
-//				}
-//			}
-//		}
-////	    throw new PendingException();
-//	}
-
-//	@Then("^sell \"([^\"]*)\"$")
-//	public void sell(String arg1) throws Throwable {
-//	    // Express the Regexp above with the code you wish you had
-//		System.out.println("Selling " + arg1);
-////	    throw new PendingException();
-//	}
-
 	
 	@Given("^a current price of \"([^\"]*)\" for a stock \"([^\"]*)\"$")
 	public void a_current_price_of_for_a_stock(String price, String name) throws Throwable {
@@ -142,4 +103,24 @@ public class DayTraderSteps {
 			
 		}
 	}
+	
+	@Then("^do not ask to sell \"([^\"]*)\"$")
+	public void do_not_ask_to_sell(String name) throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+		String action = tradeResponse.getAction();
+		if (action == null) {
+			System.out.println("Don't sell stock of " + name );		
+		}
+	}
+
+	@Then("^do not bid to buy \"([^\"]*)\"$")
+	public void do_not_bid_to_buy(String name) throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+		String action = tradeResponse.getAction();
+		if (action == null) {
+			System.out.println("Don't buy stock of " + name );		
+		}
+	}
+
+
 }
