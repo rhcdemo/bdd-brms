@@ -1,12 +1,19 @@
 package com.rhc.stock;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import com.rhc.drools.reference.DroolsRequest;
-
+/**
+ * 
+ * @author Red Hat Consulting
+ * 
+ * Public class StockDay is one day of information for a given Stock.
+ * This information is crucial in providing information to develop
+ * an informed trading algorithm.  
+ * 
+ * StockDay is a sortable class and is compared by Date day, which 
+ * is a required field of the class in order to be sortable.
+ *
+ */
 @SuppressWarnings("rawtypes")
 public class StockDay implements Comparable{
 

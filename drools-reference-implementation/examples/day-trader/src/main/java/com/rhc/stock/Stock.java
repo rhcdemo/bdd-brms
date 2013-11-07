@@ -13,24 +13,24 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.Iterator;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.math.*;
 
-import com.rhc.drools.reference.DroolsRequest;
-
+/**
+ * 
+ * @author Red Hat Consulting
+ * 
+ * Public class Stock holds information on a given stock listing, as well as the most recent quote
+ * for the given stock.  The Stock class also holds a map with a history of days, 
+ * which include day's highs, lows, etc.  Stock is the central reference object for the day-trader example.
+ *
+ */
 public class Stock{
 	
 	private String name;
 	private String ticker;
 	private StockQuote quote;
 	private Map<Date, StockDay> history = new HashMap<Date, StockDay>();
-	
 	
 	public Map<Date, StockDay> getHistory() {
 		return history;
@@ -99,8 +99,6 @@ public class Stock{
 			stockDay.setDayLow((float) Double.parseDouble(line[3]));
 			stockDay.setDayClose((float) Double.parseDouble(line[4]));
 			
-//			System.out.println(name + "--" + stockDay.getDay().toString() + "--" + stockDay.getDayOpen() + "--" + stockDay.getDayHigh() + "--" + stockDay.getDayLow() + "--" + stockDay.getDayClose());
-			
 			this.getHistory().put(date, stockDay);
 	    }
 	    
@@ -116,7 +114,6 @@ public class Stock{
 		StockQuote quote = new StockQuote();
 		quote.setStock(this);
 
-//		Date currentDay = getHistory().lastKey();
 		List<Date> dates = new ArrayList<Date>();
 		dates.addAll(getHistory().keySet());
 		Collections.sort(dates);

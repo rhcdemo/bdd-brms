@@ -19,7 +19,8 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 	<bean id="stocksKBaseBuilder" class="com.rhc.drools.reference.ClasspathKnowledgeBaseBuilder">
 		<property name="knowledgeResources">
 			<set>
-				<value>rules/dayTrader_rules.drl</value>
+				<value>com/rhc/drools/reference/dayTrader_rules.drl</value>
+				<value>com/rhc/drools/reference/dayTrader-flow.rf</value>
 			</set>
 		</property>
 	</bean>

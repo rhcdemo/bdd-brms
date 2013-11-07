@@ -21,7 +21,7 @@ And a daily volatility of ".25" USD
 
 When determining an action for stock "GOOG"
 
-Then bid to buy "GOOG" for "10.01"
+Then bid to buy stock "GOOG" for "10.01"
 
 
 @DoNotSell
@@ -33,7 +33,7 @@ And a daily volatility of ".25" USD
 
 When determining an action for stock "GOOG" 
 
-Then do not ask to sell "GOOG"
+Then do not ask to sell stock "GOOG"
 
 
 @DoNotBuy
@@ -45,4 +45,4 @@ And a daily volatility of ".25" USD
 
 When determining an action for stock "GOOG"
 
-Then do not bid to buy "GOOG"
+Then do not bid to buy stock "GOOG"

@@ -97,13 +97,12 @@ public class ClasspathKnowledgeBaseBuilder implements KnowledgeBaseBuilder {
 
 				if ( resourceFile.endsWith( ".drl" ) ) {
 					kbuilder.add( ResourceFactory.newClassPathResource( resourceFile, getClass() ), ResourceType.DRL );
-				} else if ( resourceFile.endsWith( ".bpmn" ) ) {
+				} else if ( resourceFile.endsWith( ".bpmn" ) || resourceFile.endsWith( ".rf" ) ) {
 					kbuilder.add( ResourceFactory.newClassPathResource( resourceFile, getClass() ), ResourceType.BPMN2 );
 				} else if ( resourceFile.endsWith( ".xml" ) ) {
 					kbuilder.add( ResourceFactory.newClassPathResource( resourceFile, getClass() ),
 							ResourceType.CHANGE_SET );
-				}
-
+				} 
 			}
 		}
 

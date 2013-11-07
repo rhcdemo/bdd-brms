@@ -3,23 +3,18 @@ package com.rhc.stock;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
 import org.drools.logger.KnowledgeRuntimeLogger;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.rhc.drools.reference.StatelessDroolsComponent;
+import com.rhc.trade.Trade;
 import com.rhc.trade.TradeRequest;
 import com.rhc.trade.TradeResponse;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -44,7 +39,7 @@ public class DayTraderSteps {
 	
 	@Given("^a current price of \"([^\"]*)\" for a stock \"([^\"]*)\"$")
 	public void a_current_price_of_for_a_stock(String price, String name) throws Throwable {
-	    // Express the Regexp above with the code you wish you had
+	   
 	    stock.setName(name);
 	    StockQuote quote = new StockQuote();
 	    quote.setPrice(Float.valueOf(price));
@@ -54,20 +49,21 @@ public class DayTraderSteps {
 
 	@Given("^a day open of \"([^\"]*)\"$")
 	public void a_day_open_of(String open) throws Throwable {
-	    // Express the Regexp above with the code you wish you had
+	 
 		day.setDayOpen(Float.valueOf(open));
 		day.setStock(stock);
 	}
 
 	@Given("^a daily volatility of \"([^\"]*)\" USD$")
 	public void a_daily_volatility_of_USD(String volatility) throws Throwable {
-	    // Express the Regexp above with the code you wish you had
+
 		stock.getQuote().setVolatility(Float.valueOf(volatility));
 	}
 
 	
 	@When("^determining an action for stock \"([^\"]*)\"$")
 	public void determining_an_action_for_stock(String arg1) throws Throwable {
+		
 		TradeRequest tradeRequest = new TradeRequest();
 		tradeRequest.setDay(day);
 		tradeRequest.setQuote(stock.getQuote());
@@ -78,41 +74,39 @@ public class DayTraderSteps {
 
 	@Then("^ask to sell stock \"([^\"]*)\" for \"([^\"]*)\"$")
 	public void ask_to_sell_stock_for(String name, String price) throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-		String action = tradeResponse.getAction();
-		if (action != null) {
-			if (action.equalsIgnoreCase("sell"))
+
+		Trade trade = tradeResponse.getSellTrade();
+		if (trade != null) {
+			if (trade.getPrice().equals(Float.valueOf(price)))
 				System.out.println("Sell stock of " + name + " for " + price );
 			
 		}
-//	    throw new PendingException();
 	}
 
-	@Then("^bid to buy \"([^\"]*)\" for \"([^\"]*)\"$")
-	public void bid_to_buy_for(String name, String price) throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-		String action = tradeResponse.getAction();
-		if (action != null) {
-			if (action.equalsIgnoreCase("buy"))
+	@Then("^bid to buy stock \"([^\"]*)\" for \"([^\"]*)\"$")
+	public void bid_to_buy_stock_for(String name, String price) throws Throwable {
+
+		Trade trade = tradeResponse.getBuyTrade();
+		if (trade != null) {
+			if (trade.getPrice().equals(Float.valueOf(price)))
 				System.out.println("Buy stock of " + name + " for " + price );
-			
 		}
 	}
 	
-	@Then("^do not ask to sell \"([^\"]*)\"$")
-	public void do_not_ask_to_sell(String name) throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-		String action = tradeResponse.getAction();
-		if (action == null) {
+	@Then("^do not ask to sell stock \"([^\"]*)\"$")
+	public void do_not_ask_to_sell_stock(String name) throws Throwable {
+
+		Trade trade = tradeResponse.getSellTrade();
+		if (trade == null) {
 			System.out.println("Don't sell stock of " + name );		
 		}
 	}
 
-	@Then("^do not bid to buy \"([^\"]*)\"$")
-	public void do_not_bid_to_buy(String name) throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-		String action = tradeResponse.getAction();
-		if (action == null) {
+	@Then("^do not bid to buy stock \"([^\"]*)\"$")
+	public void do_not_bid_to_buy_stock(String name) throws Throwable {
+
+		Trade trade = tradeResponse.getBuyTrade();
+		if (trade == null) {
 			System.out.println("Don't buy stock of " + name );		
 		}
 	}

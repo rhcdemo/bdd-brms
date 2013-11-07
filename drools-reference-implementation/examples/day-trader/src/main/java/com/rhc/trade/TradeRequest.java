@@ -8,6 +8,20 @@ import com.rhc.drools.reference.DroolsRequest;
 import com.rhc.stock.StockDay;
 import com.rhc.stock.StockQuote;
 
+/**
+ * 
+ * @author Red Hat Consulting
+ * 
+ * Public class TradeRequest sends important stock information into  
+ * the rules engine to execute.  
+ * 
+ * The getAllFacts() function is used by the StatelessDroolsComponent
+ * to fire Drools executions on the objects set in the function.
+ * 
+ * The getProcessId() function is used by the StatelessDroolsComponent
+ * to fire rules according to their given Rules Groups
+ *
+ */
 public class TradeRequest implements DroolsRequest{
 
 	private StockQuote quote;
@@ -39,8 +53,7 @@ public class TradeRequest implements DroolsRequest{
 
 	@Override
 	public String getProcessId() {
-		// TODO Auto-generated method stub
-		return null;
+		return "com.rhc.drools.test";
 	}
 
 }
