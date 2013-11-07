@@ -1,11 +1,14 @@
 package com.rhc.stock;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.rhc.drools.reference.DroolsRequest;
-
+/**
+ * 
+ * @author Red Hat Consulting
+ * 
+ * Public class StockQuote holds the most current price and volatility of a given stock.
+ * This information is meant to be as close to real-time as possible, and is the point-in-time
+ * measure used to determine when it is advantageous to buy/sell stock.
+ *
+ */
 public class StockQuote{
 	
 	private Stock stock;
@@ -35,6 +38,5 @@ public class StockQuote{
 	public void setVolatility(Float volatility) {
 		this.volatility = volatility;
 	}
-	
-	
+
 }
