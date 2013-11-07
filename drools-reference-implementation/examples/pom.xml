@@ -12,5 +12,6 @@
 	<modules>
 		<module>insurance</module>
 		<module>claims</module>
+		<module>day-trader</module>
 	</modules>
 </project>
